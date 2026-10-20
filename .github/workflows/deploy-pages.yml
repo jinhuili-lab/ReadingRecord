@@ -1,0 +1,46 @@
+name: Build and deploy blog to GitHub Pages
+
+# Keeps main identical to upstream NotionNext. This branch only adds the
+# Pages build. Triggered manually or by an external daily dispatcher.
+on:
+  push:
+    branches: [pages]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Static export
+        env:
+          NEXT_PUBLIC_BASE_PATH: /ReadingRecord
+          NEXT_PUBLIC_DEPLOYMENT_URL: https://jinhuili-lab.github.io/ReadingRecord
+          NEXT_PUBLIC_LINK: https://jinhuili-lab.github.io/ReadingRecord
+          NEXT_PUBLIC_THEME: hexo
+          NEXT_PUBLIC_ENABLE_RSS: "true"
+          NOTION_PAGE_ID: ${{ vars.NOTION_PAGE_ID || '1a3bb804339380d0ad52d7c96c35f3cc' }}
+        run: yarn export
+      - name: Prepare artifact for project-site subpath
+        run: python3 scripts/prepare-pages.py
+      - name: Publish to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out
+          publish_branch: gh-pages
+          force_orphan: true
+          enable_jekyll: false

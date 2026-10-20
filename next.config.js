@@ -195,6 +195,8 @@ function getOutput() {
 }
 
 const nextConfig = {
+  // Enabled only for subpath deployments such as GitHub Pages project sites.
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
   eslint: {
     ignoreDuringBuilds: true
   },
