@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[44036],{44036:(e,r,s)=>{s.r(r),s.d(r,{default:()=>d});var t=s(37876),a=s(14232),n=s(14969);let d=()=>((0,a.useEffect)(()=>{(0,n.loadExternalResource)("/ReadingRecord/js/starrySky.js","js").then(e=>{window.renderStarrySky&&window.renderStarrySky()})},[]),(0,t.jsx)(t.Fragment,{}))}}]);

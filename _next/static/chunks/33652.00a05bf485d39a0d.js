@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[33652],{33652:(e,r,n)=>{n.r(r),n.d(r,{Pdf:()=>a});var t=n(37876);function a(e){let{file:r}=e;return r?(0,t.jsx)("object",{data:r,type:"application/pdf",width:"100%",height:"100%",children:(0,t.jsx)("a",{href:r,target:"_blank",rel:"noopener noreferrer",children:"打开 PDF"})}):null}}}]);
