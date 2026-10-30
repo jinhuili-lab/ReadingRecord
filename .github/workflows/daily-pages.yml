@@ -1,17 +1,36 @@
 name: Daily ReadingRecord Pages build
 
 # GitHub-native replacement for the external (local machine) dispatcher.
-# Scheduled workflows are only read from the default branch, so this thin
-# wrapper lives on main and calls the real build on the `pages` branch.
+# GitHub Actions cron is UTC-only, so we schedule both UTC slots that can be
+# 18:00 in Chicago and let a gate job keep only the one that really is 18:00
+# local time (handles CDT/CST automatically).
 
 on:
   schedule:
-    - cron: '0 9 * * *'   # 09:00 UTC = 04:00 CDT
+    - cron: '0 23 * * *'   # 18:00 CDT (Mar-Nov)
+    - cron: '0 0 * * *'    # 18:00 CST (Nov-Mar)
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
+  gate:
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.check.outputs.run }}
+    steps:
+      - id: check
+        env:
+          TZ: America/Chicago
+        run: |
+          if [ "${{ github.event_name }}" != "schedule" ] || [ "$(date +%H)" = "18" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          fi
+
   build:
+    needs: gate
+    if: needs.gate.outputs.run == 'true'
     uses: jinhuili-lab/ReadingRecord/.github/workflows/deploy-pages.yml@pages
