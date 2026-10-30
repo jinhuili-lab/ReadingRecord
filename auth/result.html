@@ -1,0 +1,31 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charSet="utf-8" data-next-head=""/><meta name="viewport" content="width=device-width" data-next-head=""/><link rel="preconnect" href="https://images.unsplash.com"/><link rel="dns-prefetch" href="//images.unsplash.com"/><link rel="preload" href="/ReadingRecord/vendor/fontawesome/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous"/><link rel="preload" href="/ReadingRecord/vendor/fontawesome/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous"/><link rel="preload" href="/ReadingRecord/vendor/fontawesome/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous"/><style>.fa,.fas,.far,.fab,.fa-solid,.fa-regular,.fa-brands{display:inline-flex;width:1.25em;min-width:1.25em;height:1em;align-items:center;justify-content:center;text-align:center;line-height:1}</style><link id="font-awesome-css" rel="preload" as="style" href="/ReadingRecord/vendor/fontawesome/css/all.min.css"/><script>requestAnimationFrame(function(){var l=document.getElementById('font-awesome-css');if(l)l.rel='stylesheet'})</script><noscript><link rel="stylesheet" href="/ReadingRecord/vendor/fontawesome/css/all.min.css"/></noscript><script>
+(function() {
+  const darkMode = localStorage.getItem('darkMode')
+
+  const prefersDark =
+    window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+
+  const defaultAppearance = 'light'
+
+  let shouldBeDark = darkMode === 'true' || darkMode === 'dark'
+
+  if (darkMode === null) {
+    if (defaultAppearance === 'dark') {
+      shouldBeDark = true
+    } else if (defaultAppearance === 'auto') {
+      // 检查是否在深色模式时间范围内
+      const date = new Date()
+      const hours = date.getHours()
+      const darkTimeStart = 18
+      const darkTimeEnd = 6
+      
+      shouldBeDark = prefersDark || (hours >= darkTimeStart || hours < darkTimeEnd)
+    }
+  }
+  
+  // 立即设置 html 元素的类
+  document.documentElement.classList.add(shouldBeDark ? 'dark' : 'light')
+})()
+</script><link rel="preload" href="/ReadingRecord/_next/static/css/93788449d36d4aa4.css" as="style"/><link rel="stylesheet" href="/ReadingRecord/_next/static/css/93788449d36d4aa4.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/ReadingRecord/_next/static/chunks/polyfills-42372ed130431b0a.js"></script><script src="/ReadingRecord/_next/static/chunks/webpack-8c1f3a7b850d8d14.js" defer=""></script><script src="/ReadingRecord/_next/static/chunks/framework-b21a9a9d949ebca4.js" defer=""></script><script src="/ReadingRecord/_next/static/chunks/main-205da5c3cad064bd.js" defer=""></script><script src="/ReadingRecord/_next/static/chunks/pages/_app-6371a252ee9ac21d.js" defer=""></script><script src="/ReadingRecord/_next/static/chunks/pages/auth/result-d1a25f0fd97c6699.js" defer=""></script><script src="/ReadingRecord/_next/static/slN2pyV6_OmQ_XBr67vVI/_buildManifest.js" defer=""></script><script src="/ReadingRecord/_next/static/slN2pyV6_OmQ_XBr67vVI/_ssgManifest.js" defer=""></script><style id="__jsx-1153875256">null
+
+  </style></head><body><div id="__next"></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{}},"page":"/auth/result","query":{},"buildId":"slN2pyV6_OmQ_XBr67vVI","assetPrefix":"/ReadingRecord","runtimeConfig":{"THEMES":["claude","commerce","endspace","example","fukasawa","fuwari","game","gitbook","heo","hexo","landing","magzine","matery","medium","movie","nav","next","nobelium","opc","photo","plog","proxio","simple","starter","thoughtlite","typography","xuhome"]},"nextExport":true,"autoExport":true,"isFallback":false,"scriptLoader":[]}</script></body></html>
