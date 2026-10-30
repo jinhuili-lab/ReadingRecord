@@ -1,0 +1,17 @@
+name: Daily ReadingRecord Pages build
+
+# GitHub-native replacement for the external (local machine) dispatcher.
+# Scheduled workflows are only read from the default branch, so this thin
+# wrapper lives on main and calls the real build on the `pages` branch.
+
+on:
+  schedule:
+    - cron: '0 9 * * *'   # 09:00 UTC = 04:00 CDT
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    uses: jinhuili-lab/ReadingRecord/.github/workflows/deploy-pages.yml@pages
