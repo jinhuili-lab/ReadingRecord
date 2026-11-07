@@ -1,36 +1,23 @@
 name: Daily ReadingRecord Pages build
 
-# GitHub-native replacement for the external (local machine) dispatcher.
-# GitHub Actions cron is UTC-only, so we schedule both UTC slots that can be
-# 18:00 in Chicago and let a gate job keep only the one that really is 18:00
-# local time (handles CDT/CST automatically).
+# Daily rebuild of the Notion content into GitHub Pages.
+#
+# NOTE: there used to be a "gate" job that dropped one of the two UTC slots so
+# only the run that really landed at 18:00 Chicago time would deploy. GitHub's
+# scheduled-workflow queue can be delayed by hours, so that gate almost always
+# evaluated to false and Pages went stale (last deploy 2026-10-30). The gate is
+# gone: both slots deploy, and peaceiris/actions-gh-pages only commits when the
+# exported output actually changed.
 
 on:
   schedule:
-    - cron: '0 23 * * *'   # 18:00 CDT (Mar-Nov)
-    - cron: '0 0 * * *'    # 18:00 CST (Nov-Mar)
+    - cron: '0 23 * * *'   # 18:00 CDT / 17:00 CST
+    - cron: '0 0 * * *'    # 19:00 CDT / 18:00 CST
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  gate:
-    runs-on: ubuntu-latest
-    outputs:
-      run: ${{ steps.check.outputs.run }}
-    steps:
-      - id: check
-        env:
-          TZ: America/Chicago
-        run: |
-          if [ "${{ github.event_name }}" != "schedule" ] || [ "$(date +%H)" = "18" ]; then
-            echo "run=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "run=false" >> "$GITHUB_OUTPUT"
-          fi
-
   build:
-    needs: gate
-    if: needs.gate.outputs.run == 'true'
     uses: jinhuili-lab/ReadingRecord/.github/workflows/deploy-pages.yml@pages
