@@ -4,6 +4,12 @@ permissions:
   contents: write
 
 on:
+  # 1. 开启定时自动更新
+  schedule:
+    # 每天 UTC 0 点（北京时间上午 08:00）自动运行
+    - cron: '0 0 * * *'
+
+  # 2. 保留手工作业触发按钮
   workflow_dispatch:
 
 jobs:
@@ -11,11 +17,10 @@ jobs:
     name: Sync latest commits from upstream repo
     runs-on: ubuntu-latest
     if: ${{ github.event.repository.fork }}
-
     steps:
       # Step 1: run a standard checkout action
       - name: Checkout target repo
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
 
       # Step 2: run the sync action
       - name: Sync upstream changes
@@ -25,9 +30,7 @@ jobs:
           upstream_sync_repo: notionnext-org/NotionNext
           upstream_sync_branch: main
           target_sync_branch: main
-          target_repo_token: ${{ secrets.GITHUB_TOKEN }} # automatically generated, no need to set
-
-          # Set test_mode true to run tests instead of the true action!!
+          target_repo_token: ${{ secrets.GITHUB_TOKEN }}
           test_mode: false
 
       - name: Sync check
