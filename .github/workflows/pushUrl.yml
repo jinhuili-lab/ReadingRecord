@@ -27,10 +27,12 @@ jobs:
         uses: actions/checkout@v7
       # - name: 'Run baiduPush' # 步骤二，执行sh命令文件
       #   run: npm install && npm run baiduPush # 运行目录是仓库根目录
-      - name: Set up Python 3.8
+      - name: Set up Python 3.13
         uses: actions/setup-python@v7
         with:
-          python-version: 3.8
+          # Ubuntu 26.04 (ubuntu-latest) has no Python 3.8 build; 3.13 is the
+          # oldest stable release with a linux-26.04 artifact.
+          python-version: '3.13'
 
       - name: Install requests
         run: pip install requests
