@@ -22,7 +22,11 @@ page_pattern = re.compile(
     r"""(?<=["'\`(=])/[0-9a-f]{32}(?=[/"'\`)?#\s])"""
 )
 
-prefixed_references = 0
+gallery_card_link = re.compile(
+    r'(<a\b(?=[^>]*\bclass="[^"]*\bnotion-collection-card\b)[^>]*?)\s+href="[^"]*"'
+)
+
+modified_references = 0
 for f in out.rglob('*'):
     if f.is_file() and f.suffix in {'.html', '.js', '.css', '.json', '.xml'}:
         s = f.read_text()
@@ -30,9 +34,12 @@ for f in out.rglob('*'):
         # Prefix raw Notion page-ID links too, so gallery cards stay under
         # the /ReadingRecord project-site subpath on GitHub Pages.
         t, n_pages = page_pattern.subn(lambda m: base + m.group(0), t)
+        # These Notion database-item pages are not generated in static export.
+        # Leave gallery covers zoomable without navigating to a dead route.
+        t, n_gallery_links = gallery_card_link.subn(r'\1', t)
         if t != s:
             f.write_text(t)
-            prefixed_references += n_assets + n_pages
+            modified_references += n_assets + n_pages + n_gallery_links
         else:
             f.write_text(t)
 
@@ -48,5 +55,5 @@ for f in out.rglob('*'):
             redacted += n
 
 (out / '.nojekyll').touch()
-print(json.dumps({'prefixed_references': prefixed_references, 'redacted': redacted,
+print(json.dumps({'modified_references': modified_references, 'redacted': redacted,
                   'html_files': len(list(out.rglob('*.html')))}, indent=2))
