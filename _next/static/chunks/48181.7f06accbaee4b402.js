@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[48181],{48181:(_,N,E)=>{E.r(N),E.d(N,{default:()=>O});let O={PLOG_COLOR_PRIMARY:"#1d4ed8",NOBELIUM_MENU_CATEGORY:!1,NOBELIUM_MENU_TAG:!0,NOBELIUM_MENU_ARCHIVE:!1,NOBELIUM_MENU_SEARCH:!0,NOBELIUM_MENU_RSS:!1,NOBELIUM_NAV_NOTION_ICON:!0}}}]);
