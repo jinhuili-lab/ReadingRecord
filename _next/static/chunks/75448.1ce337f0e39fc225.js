@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[75448],{75448:(e,t,l)=>{l.r(t),l.d(t,{ArticleHeader:()=>r});var s=l(37876);let r=e=>{let{post:t}=e;return(0,s.jsx)("section",{className:"w-full mx-auto mb-4",children:(0,s.jsx)("h2",{className:"py-10 dark:text-white text-center",style:{fontSize:"16px",fontWeight:"300"},children:null==t?void 0:t.title})})}}}]);
